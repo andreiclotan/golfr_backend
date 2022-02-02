@@ -28,20 +28,22 @@ module Api
     end
 
     def scores
-      user = User.find_by_id(params[:id])
-      if user 
-        serialized_scores = user.scores.map(&:serialize) 
-        render json:{
-          scores: serialized_scores
-        }
-      end
+      user = User.find_by(id: params[:id])
+      return unless user
+
+      serialized_scores = user.scores.map(&:serialize)
+      render json: {
+        scores: serialized_scores
+      }
     end
 
     def name
-      user = User.find_by_id(params[:id])
-      render json:{
+      user = User.find_by(id: params[:id])
+      return unless user
+
+      render json: {
         name: user.name
-      } if user
+      }
     end
   end
 end
